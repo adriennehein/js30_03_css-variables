@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>CSS Variables</title>
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+
+  </head>
+  <body>
+    <h1>Change <span class="h1">CSS Variables</span> with <span class="h1">JS</span></h1>
+
+    <div class="controls">
+        <label for="spacing">Spacing</label>
+        <input type="range" name="spacing" min="10" max="200" value="30" data-sizing="px">
+
+        <label for="blur">Blur</label>
+        <input type="range" name="blur" min="0" max="25" value="0" data-sizing="px">
+
+        <label for="base">Frame</label>
+        <input type="color" name="base" value="#5d324b">
+
+        <label for="font">Font Size</label>
+        <input type="range" name="font" min="5" max="100" value="60" data-sizing="px">
+
+        <img src="branches.jpg">
+    </div>
+
+    <style>
+     :root {
+       --base: #5d324b;
+       --spacing: 30px;
+       --blur: 0px;
+       --font: 60px;
+       --type: 'Oswald', sans-serif;
+       --bg: #77C3C3;
+     }
+
+     .controls {
+       text-align: center;
+     }
+
+     body {
+       background-color: var(--bg);
+     }
+
+     img {
+       display: block;
+       padding: var(--spacing);
+       background: var(--base);
+       filter: blur(var(--blur));
+       max-width: 80%;
+       margin: 30px auto;
+
+     }
+
+     h1 {
+       font-size: var(--font);
+       font-family: var(--type);
+       text-align: center;
+     }
+
+     .h1 {
+       color: var(--base);
+     }
+
+     label {
+       font-family: var(--type);
+       font-size: 40px;
+       padding-left: 30px;
+       padding-right: 20px;
+     }
+
+     input {
+       width: 100px;
+     }
+
+    </style>
+
+    <script>
+      const inputs = document.querySelectorAll('.controls input');
+
+      function handleUpdate() {
+        const suffix = this.dataset.sizing  || '';
+        document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+      }
+
+      inputs.forEach(input => input.addEventListener('change', handleUpdate));
+      //make sure it updates as slider changes
+      inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+
+    </script>
+  </body>
+</html>
